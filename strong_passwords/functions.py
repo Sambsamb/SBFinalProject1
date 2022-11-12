@@ -9,6 +9,7 @@ FHSU - Fall 2022
 
 import requests
 import datetime
+import Config
 
 
 def check_url(url):
@@ -28,7 +29,7 @@ def check_pass(email):
     api_call = 'pasteaccount/'
     headers = {
         'User-Agent': 'Lets Make Strong Passwords',
-        'hibp-api-key': 'get your own'
+        'hibp-api-key': Config.api_key
     }
 
     try:
