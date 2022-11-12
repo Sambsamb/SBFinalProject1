@@ -24,7 +24,7 @@ def check_url(url):
         raise SystemExit(f"{url}: is Not reachable \nError details: {e}")
 
 
-def check_pass(email):
+def check_email(email):
     base_url = 'https://haveibeenpwned.com/api/v3/'
     api_call = 'pasteaccount/'
     headers = {
@@ -47,18 +47,16 @@ def check_pass(email):
 
     except BaseException as e:
         if response.status_code == 400:
-            print('Bad request: The account does not comply with an acceptable format')
+            print(f'Bad request: Bad email format "{email}"')
         elif response.status_code == 401:
-            print('Unauthorized — the API key provided was not valid')
+            print(f'Unauthorized — the API key provided "{Config.api_key}" is not valid')
         elif response.status_code == 403:
             print('Forbidden: No user agent has been specified in the request')
         elif response.status_code == 404:
-            print('Not found: The account could not be found (not pwned)')
-        elif response.status_code == 429:
-            print('Too many requests: The rate limit has been exceeded\n')
-            print(response.text)
+            print(f'Not found: The email "{email}" was not found (not pwned)')
+        elif response.status_code == 429:  # API rate exceeded
+            print(str(response.json()).split(':')[-1].replace('}', '').replace("'", '').strip())
 
 
-email = input('Please enter email address to check\n')
-check_pass(email)
+check_email('abc@mail.fhsu.edu')
 
