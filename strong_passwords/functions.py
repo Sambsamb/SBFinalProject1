@@ -38,6 +38,7 @@ def check_email(email):
 
         for result in response.json():
             print()
+            print('Email'.ljust(12), email)
             for key in result.keys():
                 # Convert Date fields from UTC to current time zone
                 try:
@@ -58,5 +59,5 @@ def check_email(email):
             print(str(response.json()).split(':')[-1].replace('}', '').replace("'", '').strip())
 
 
-check_email('abc@mail.fhsu.edu')
+check_email('test111@domain.com')
 

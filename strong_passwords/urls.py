@@ -12,6 +12,7 @@ from strong_passwords import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('check_email/', views.check_email, name='check_email'),
 ]
 
 
