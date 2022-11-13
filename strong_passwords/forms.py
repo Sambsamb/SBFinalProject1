@@ -11,4 +11,4 @@ from django import forms
 
 
 class CheckEmail(forms.Form):
-    check_email = forms.CharField(label='Check Email', max_length=100)
+    check_email = forms.CharField(label='Email', max_length=100)
