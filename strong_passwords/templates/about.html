@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h1>About Us</h1>
+        <p class="card-text ">This Django Web App is the final project for:</p>
+        <ul class="list-group">
+            <li class="list-group-item">INF601 - Advanced Programming in Python</li>
+            <li class="list-group-item">Final Project - App relating to MPS concentration</li>
+            <li class="list-group-item">Sam Boutros</li>
+            <li class="list-group-item">Prof. Zeller</li>
+            <li class="list-group-item">FHSU - Fall 2022</li>
+            <li class="list-group-item">12/4/2022</li>
+        </ul>
+      </div>
+    </div>
+    {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+  </div>
+</div>
+
+{% endblock content %}

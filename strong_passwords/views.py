@@ -26,6 +26,10 @@ def home(request):
     return render(request, 'home.html', {'site_name': Config.site_name})
 
 
+def about(request):
+    return render(request, 'about.html', {'site_name': Config.site_name})
+
+
 def check_email(request):
     # if this is a POST request process the form data
     if request.method == 'POST':
