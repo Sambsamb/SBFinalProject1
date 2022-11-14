@@ -22,8 +22,8 @@
         <div class="row">
             <div class=" col-md-8 col-md-10 mx-auto">
                 <div class="site-heading">
-                    <h3 class=" site-heading my-4 mt-3 text-white"> Let's make strong passwords </h3>
-                    <p class="text-light">aaa..! &nbsp
+                    <h3 class=" site-heading my-4 mt-3 text-white"> {{ site_name }} </h3>
+                    <p class="text-light">Security is a shared responsibility
                     </p>
                 </div>
             </div>
@@ -35,7 +35,17 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 mt-3 left">
-            <a href="check_email/">Check Email</a>
+            Welcome to "{{ site_name }}". This web app provides the following identity security features:
+            <!-- https://getbootstrap.com/docs/4.0/components/list-group/ -->
+            <div class="list-group">
+              <a href="check_email/" class="list-group-item list-group-item-primary">
+                Check if your email address has been hacked <br>(its password has been exposed publicly)
+              </a>
+              <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+              <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+              <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+              <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+            </div>
         </div>
         {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
     </div>

@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .forms import CheckEmail
 from .functions import *
+import Config
 from django.contrib import messages
 import datetime
 from django.template.defaulttags import register
@@ -22,7 +23,7 @@ def get_item(dictionary, key):
 
 
 def home(request):
-    return render(request, 'home.html', {})
+    return render(request, 'home.html', {'site_name': Config.site_name})
 
 
 def check_email(request):
@@ -40,10 +41,15 @@ def check_email(request):
             context = {
                 'check_result': check_result,
                 'key_order': key_order,
+                'site_name': Config.site_name,
             }
         return render(request, 'check_email.html', context)
     # if a GET (or any other method) we'll create a blank form
     else:
         form = CheckEmail()
 
-    return render(request, 'check_email.html', {'form': form})
+    context = {
+        'form': form,
+        'site_name': Config.site_name,
+    }
+    return render(request, 'check_email.html', context)
