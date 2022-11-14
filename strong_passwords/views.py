@@ -34,6 +34,10 @@ def policy(request):
     return render(request, 'policy.html', {'site_name': Config.site_name})
 
 
+def contact(request):
+    return render(request, 'contact.html', {'site_name': Config.site_name})
+
+
 def check_email(request):
     # if this is a POST request process the form data
     if request.method == 'POST':
