@@ -42,7 +42,6 @@ def check_email(request):
                 'key_order': key_order,
             }
         return render(request, 'check_email.html', context)
-#            return HttpResponseRedirect('/check_email/')
     # if a GET (or any other method) we'll create a blank form
     else:
         form = CheckEmail()
