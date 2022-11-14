@@ -35,13 +35,25 @@
         <form method="post">
             {% csrf_token %}
             {{ form }}
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <p>{{ message }}</p>
-                {% endfor %}
-            </ul>
-            {% endif %}
+
+            <table id="dtBasicExample" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        {% for key in key_order %}
+                        <th>{{ key }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in check_result %}
+                    <tr>
+                        {% for key in key_order %}
+                        <td>{{ item | get_item:key}}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
             <input type="submit" value="Check Email">
         </form>
