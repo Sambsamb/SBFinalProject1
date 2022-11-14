@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+
 {% block content %}
+
 <style>
     body {
         font-family: "Roboto", sans-serif;
@@ -30,35 +32,39 @@
         </div>
     </div>
 </header>
+
 <div class="container">
     <div class="row">
-        {% csrf_token %}
-        {% if check_result %}
-            <table id="dtBasicExample" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        {% for key in key_order %}
-                        <th>{{ key }}</th>
+        <div class="col-md-8 mt-3 left">
+            {% if check_result %}
+                <table id="dtBasicExample" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            {% for key in key_order %}
+                            <th>{{ key }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in check_result %}
+                        <tr>
+                            {% for key in key_order %}
+                            <td>{{ item | get_item:key}}</td>
+                            {% endfor %}
+                        </tr>
                         {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in check_result %}
-                    <tr>
-                        {% for key in key_order %}
-                        <td>{{ item | get_item:key}}</td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <form method="post">
-                {{ form }}
-                 <input type="submit" value="Check Email">
-            </form>
-        {% endif %}
-
+                    </tbody>
+                </table>
+            {% else %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                     <input type="submit" value="Check Email">
+                </form>
+            {% endif %}
+        </div>
+        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
     </div>
 </div>
+
 {%endblock%}

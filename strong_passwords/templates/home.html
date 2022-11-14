@@ -30,10 +30,14 @@
         </div>
     </div>
 </header>
-    <p>.</p>
+
+
 <div class="container">
     <div class="row">
-        <a href="check_email/">Check Email</a>
+        <div class="col-md-8 mt-3 left">
+            <a href="check_email/">Check Email</a>
+        </div>
+        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
     </div>
 </div>
 {%endblock%}
