@@ -37,6 +37,10 @@
     <div class="row">
         <div class="col-md-8 mt-3 left">
             {% if check_result %}
+                <!-- This is what's rendered on a POST request -->
+                <div class="alert alert-danger" role="alert">
+                    Your email <b>{{ email }}</b> password has been leaked/publicly exposed in the following reported hacks:
+                </div>
                 <table id="dtBasicExample" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                         <tr>
@@ -56,6 +60,7 @@
                     </tbody>
                 </table>
             {% else %}
+                <!-- This is what's rendered on a GET request -->
                 <form method="post">
                     {% csrf_token %}
                     {{ form }}

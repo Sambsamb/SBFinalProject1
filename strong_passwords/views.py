@@ -27,7 +27,7 @@ def home(request):
 
 
 def check_email(request):
-    # if this is a POST request we need to process the form data
+    # if this is a POST request process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = CheckEmail(request.POST)
@@ -39,6 +39,7 @@ def check_email(request):
                 keys.update(set(item))
             key_order = sorted(keys)
             context = {
+                'email': form.cleaned_data['check_email'],
                 'check_result': check_result,
                 'key_order': key_order,
                 'site_name': Config.site_name,
@@ -47,9 +48,8 @@ def check_email(request):
     # if a GET (or any other method) we'll create a blank form
     else:
         form = CheckEmail()
-
-    context = {
-        'form': form,
-        'site_name': Config.site_name,
-    }
-    return render(request, 'check_email.html', context)
+        context = {
+            'form': form,
+            'site_name': Config.site_name,
+        }
+        return render(request, 'check_email.html', context)
