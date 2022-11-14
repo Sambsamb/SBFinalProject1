@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h1>Privacy Policy</h1>
+        <p class="card-text ">This Web App does not collect any data of any kind. </p>
+        <p>Information entered through this
+            Web App's forms such as email address or password to be tested is passed to the
+            <a href="https://haveibeenpwned.com/API/v3" target="_blank">"HaveIBeenPawned" API</a>, using
+            <a href="https://blog.cloudflare.com/validating-leaked-passwords-with-k-anonymity/" target="_blank">
+                k-anonymity</a>.</p>
+
+      </div>
+    </div>
+    {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+  </div>
+</div>
+
+{% endblock content %}
