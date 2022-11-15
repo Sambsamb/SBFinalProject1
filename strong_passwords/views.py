@@ -7,13 +7,10 @@ FHSU - Fall 2022
 12/4/2022
 """
 
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
 from .forms import CheckEmail
 from .functions import *
 import Config
-from django.contrib import messages
-import datetime
+from django.shortcuts import render
 from django.template.defaulttags import register
 
 
@@ -101,3 +98,7 @@ def check_email(request):
             'site_name': Config.site_name,
         }
         return render(request, 'check_email.html', context)
+
+
+def page_not_found_view(request, exception):
+    return render(request, '404.html', status=404)
