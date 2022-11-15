@@ -58,10 +58,38 @@ def check_email(request):
             for item in check_result:
                 keys.update(set(item))
             key_order = sorted(keys)
+            code = text = detail = None
+            alert = 'danger'
+            if type(check_result) == dict:
+                key_order = None
+                code = check_result['code']
+                text = check_result['text']
+                if check_result['code'] == 400:
+                    detail = 'Bad request: The email provided does not comply with acceptable format.'
+                    alert = 'warning'
+                elif check_result['code'] == 401:
+                    detail = 'Unauthorized — the API key provided was not valid.'
+                    alert = 'warning'
+                elif check_result['code'] == 403:
+                    detail = 'Forbidden: No user agent has been specified in the request.'
+                    alert = 'danger'
+                elif check_result['code'] == 404:
+                    detail = 'Not found in breach data.'
+                    alert = 'success'
+                elif check_result['code'] == 429:  # Rate limit exceeded
+                    detail = check_result['json']['message']
+                    alert = 'info'
+                else:
+                    detail = 'Unexpected status code.'
+                    alert = 'warning'
             context = {
                 'email': form.cleaned_data['check_email'],
                 'check_result': check_result,
                 'key_order': key_order,
+                'code': code,
+                'text': text,
+                'detail': detail,
+                'alert': alert,
                 'site_name': Config.site_name,
             }
         return render(request, 'check_email.html', context)

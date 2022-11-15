@@ -5,29 +5,41 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 mt-3 left">
+            <!-- This is what's rendered on a POST request -->
+            <!--<p>check_result is "{ check_result }}"</p>
+            <p>key_order is "{ key_order }}"</p>
+            <p>data_type is "{ data_type }}"</p>-->
             {% if check_result %}
-                <!-- This is what's rendered on a POST request -->
-                <div class="alert alert-danger" role="alert">
-                    Your email <b>{{ email }}</b> password has been leaked/publicly exposed in the following reported hacks:
-                </div>
-                <table id="dtBasicExample" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            {% for key in key_order %}
-                            <th>{{ key }}</th>
+                {% if key_order %}
+                    <div class="alert alert-{{ alert }}" role="alert">
+                        Your email <b>{{ email }}</b> password has been leaked/publicly exposed in the
+                        following reported breach(es):
+                    </div>
+                    <table id="dtBasicExample" class="table table-hover table-striped table-bordered" >
+                        <thead>
+                            <tr>
+                                {% for key in key_order %}
+                                    <th>{{ key }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in check_result %}
+                            <tr>
+                                {% for key in key_order %}
+                                    <td>{{ item | get_item:key}}</td>
+                                {% endfor %}
+                            </tr>
                             {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in check_result %}
-                        <tr>
-                            {% for key in key_order %}
-                            <td>{{ item | get_item:key}}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="alert alert-{{ alert }}" role="alert">
+                        Your email <b>{{ email }}</b> <br>
+                        {{ detail }}<br>
+                        Details: ({{ code }}) {{ text }}
+                    </div>
+                {% endif %}
             {% else %}
                 <!-- This is what's rendered on a GET request -->
                 <form method="post">

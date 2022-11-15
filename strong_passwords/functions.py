@@ -27,19 +27,35 @@ def check_email_function(email):
     base_url = 'https://haveibeenpwned.com/api/v3/'
     api_call = 'pasteaccount/'
     headers = {
-        'User-Agent': 'Lets Make Strong Passwords',
+        'User-Agent': Config.user_agent,
         'hibp-api-key': Config.api_key
     }
     response = requests.get(base_url + api_call + email, headers=headers)
-    return response.json()
+    if response.status_code == 200:
+        data = response.json()
+    else:
+        try:
+            json = response.json()
+        except:
+            json = None
+        data = {
+            'code': response.status_code,
+            'text': response.text,
+            'json': json,
+        }
+    return data
 
 
 def get_hibp_dataclasses_function():
     base_url = 'https://haveibeenpwned.com/api/v3/'
     api_call = 'dataclasses'
     headers = {
-        'User-Agent': 'Lets Make Strong Passwords',
+        'User-Agent': Config.user_agent,
         'hibp-api-key': Config.api_key
     }
     response = requests.get(base_url + api_call, headers=headers)
-    return response.json()
+    try:
+        data = response.json()
+    except:
+        data = response.text
+    return data
