@@ -116,41 +116,13 @@ def check_pass(request):
         # check whether it's valid:
         if form.is_valid():
             check_result = check_pass_function(form.cleaned_data['check_pass'])
-            code = text = detail = None
-            if type(check_result) == dict:
-                code = check_result['code']
-                text = check_result['text']
-                if check_result['code'] == 400:
-                    detail = 'Bad request: The password provided does not comply with acceptable format.'
-                    alert = 'warning'
-                elif check_result['code'] == 401:
-                    detail = 'Unauthorized — the API key provided was not valid.'
-                    alert = 'warning'
-                elif check_result['code'] == 403:
-                    detail = 'Forbidden: No user agent has been specified in the request.'
-                    alert = 'danger'
-                elif check_result['code'] == 404:
-                    detail = 'Not found in breach data.'
-                    alert = 'success'
-                elif check_result['code'] == 429:  # Rate limit exceeded
-                    detail = check_result['json']['message']
-                    alert = 'info'
-                else:
-                    detail = 'Unexpected status code.'
-                    alert = 'warning'
-            else:
-                try:
-                    prevalence = '{:,}'.format(int(check_result.split(':')[1]))
-                except:
-                    prevalence = 0
-                alert = 'danger'
+            try:
+                prevalence = '{:,}'.format(int(check_result.split(':')[1]))
+            except:
+                prevalence = 0
             context = {
                 'check_result': check_result,
                 'prevalence': prevalence,
-                'code': code,
-                'text': text,
-                'detail': detail,
-                'alert': alert,
                 'pass': form.cleaned_data['check_pass'],
                 'site_name': Config.site_name,
             }

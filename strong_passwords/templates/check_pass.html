@@ -6,15 +6,20 @@
     <div class="row">
         <div class="col-md-8 mt-3 left">
             <!-- This is what's rendered on a POST request -->
-            {% if check_result %}
-                <p>password: {{ pass }}</p>
-                <p>check_result: {{ check_result }}</p>
-                <p>prevalence: {{ prevalence }}</p>
-                <p>code: {{ code }}</p>
-                <p>text: {{ text }}</p>
-                <p>detail: {{ detail }}</p>
-                <p>alert: {{ alert }}</p>
-                <p>password: {{ pass }}</p>
+            {% if pass %}
+                {%  if check_result %}
+                    <!-- Password found in breach data -->
+                    <div class="alert alert-danger" role="alert">
+                        Your password <b>{{ pass }}</b> <br>
+                        has been observed <b>{{ prevalence }}</b> times in breach data.
+                    </div>
+                {% else %}
+                    <!-- Password not found in breach data -->
+                    <div class="alert alert-success" role="alert">
+                        Your password <b>{{ pass }}</b> <br>
+                        has NOT been observed in breach data.
+                    </div>
+                {% endif %}
             {% else %}
                 <!-- This is what's rendered on a GET request -->
                 <div class="card" style="width: 40rem;">
