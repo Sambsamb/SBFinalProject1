@@ -30,8 +30,8 @@ ALLOWED_HOSTS = ['127.0.0.1']
 # DEBUG = True
 # ALLOWED_HOSTS = []
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR.joinpath('media/')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR.joinpath('media/')
 
 # Application definition
 
