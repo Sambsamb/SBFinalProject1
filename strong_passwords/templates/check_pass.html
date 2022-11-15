@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mt-3 left">
+            <!-- This is what's rendered on a POST request -->
+            {% if check_result %}
+                <p>password: {{ pass }}</p>
+                <p>check_result: {{ check_result }}</p>
+                <p>code: {{ code }}</p>
+                <p>text: {{ text }}</p>
+                <p>detail: {{ detail }}</p>
+                <p>alert: {{ alert }}</p>
+                <p>password: {{ pass }}</p>
+            {% else %}
+                <!-- This is what's rendered on a GET request -->
+                <div class="card" style="width: 40rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">Check Password</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Check if password has been leaked publicly</h6>
+                    <p class="card-text">
+                        This check will find out if the password has appeared in previous security breaches (hacks).
+                    </p>
+                  </div>
+                </div>
+                <p> </p>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button type="submit" class="btn btn-primary">Check Password</button>
+                </form>
+            {% endif %}
+        </div>
+        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+    </div>
+</div>
+
+{%endblock%}

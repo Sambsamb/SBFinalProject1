@@ -7,7 +7,7 @@ FHSU - Fall 2022
 12/4/2022
 """
 
-from .forms import CheckEmail
+from .forms import *
 from .functions import *
 import Config
 from django.shortcuts import render
@@ -102,3 +102,35 @@ def check_email(request):
 
 def page_not_found_view(request, exception):
     return render(request, '404.html', status=404)
+
+
+def check_pass(request):
+    # if this is a POST request process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = CheckPass(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            check_result = check_pass_function(form.cleaned_data['check_pass'])
+            code = check_result['code']
+            text = check_result['text']
+            detail = 'Not found in breach data.'
+            alert = 'success'
+            context = {
+                'pass': form.cleaned_data['check_pass'],
+                'check_result': check_result,
+                'code': code,
+                'text': text,
+                'detail': detail,
+                'alert': alert,
+                'site_name': Config.site_name,
+            }
+        return render(request, 'check_pass.html', context)
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = CheckPass()
+        context = {
+            'form': form,
+            'site_name': Config.site_name,
+        }
+        return render(request, 'check_pass.html', context)

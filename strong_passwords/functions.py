@@ -9,7 +9,7 @@ FHSU - Fall 2022
 
 import requests
 import Config
-
+import hashlib
 
 def check_url(url):
     try:
@@ -58,4 +58,30 @@ def get_hibp_dataclasses_function():
         data = response.json()
     except:
         data = response.text
+    return data
+
+
+def check_pass_function(mypass):
+    base_url = 'https://api.pwnedpasswords.com/'
+    api_call = 'range/'
+    headers = {
+        'User-Agent': Config.user_agent,
+        'hibp-api-key': Config.api_key,
+    }
+    hash_object = hashlib.sha1(bytes(mypass, 'utf-8'))
+    hex_dig = hash_object.hexdigest()
+    print(hex_dig[:5])
+    response = requests.get(base_url + api_call + hex_dig[:5], headers=headers)
+    if response.status_code == 200:
+        data = response.text
+    else:
+        try:
+            json = response.json()
+        except:
+            json = None
+        data = {
+            'code': response.status_code,
+            'text': response.text,
+            'json': json,
+        }
     return data

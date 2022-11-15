@@ -19,3 +19,14 @@ class CheckEmail(forms.Form):
                                              '<a href ="/policy" target=_blank>Privacy Policy</a>.</small>',
                                    max_length=100,
                                    )
+
+
+class CheckPass(forms.Form):
+    check_pass = forms.CharField(required=True,
+                                   label='Password',
+                                   # initial='Enter email',
+                                   help_text='<small id="emailHelp" class="form-text text-muted">'
+                                             'Password is not stored. See '
+                                             '<a href ="/policy" target=_blank>Privacy Policy</a>.</small>',
+                                   max_length=100,
+                                   )
