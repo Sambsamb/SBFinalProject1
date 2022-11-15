@@ -70,10 +70,15 @@ def check_pass_function(mypass):
     }
     hash_object = hashlib.sha1(bytes(mypass, 'utf-8'))
     hex_dig = hash_object.hexdigest()
-    print(hex_dig[:5])
     response = requests.get(base_url + api_call + hex_dig[:5], headers=headers)
     if response.status_code == 200:
-        data = response.text
+        hash_list = response.text.split('\r\n')
+        found_match = None
+        for myhash in hash_list:
+            full_hash = hex_dig[:5] + myhash.strip().lower()
+            if full_hash.split(':')[0] == hex_dig:
+                found_match = full_hash
+        data = found_match  # Formatted like: 7c4a8d09ca3762af61e59520943dc26494f8941b:37509543
     else:
         try:
             json = response.json()
