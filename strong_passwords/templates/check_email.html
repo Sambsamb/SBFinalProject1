@@ -6,14 +6,11 @@
     <div class="row">
         <div class="col-md-8 mt-3 left">
             <!-- This is what's rendered on a POST request -->
-            <!--<p>check_result is "{ check_result }}"</p>
-            <p>key_order is "{ key_order }}"</p>
-            <p>data_type is "{ data_type }}"</p>-->
             {% if check_result %}
                 {% if key_order %}
                     <div class="alert alert-{{ alert }}" role="alert">
-                        Your email <b>{{ email }}</b> password has been leaked/publicly exposed in the
-                        following reported breach(es):
+                        A password associated with the email <b>{{ email }}</b> has been leaked/publicly exposed
+                        in the following reported breach(es):
                     </div>
                     <table id="dtBasicExample" class="table table-hover table-striped table-bordered" >
                         <thead>
@@ -42,10 +39,25 @@
                 {% endif %}
             {% else %}
                 <!-- This is what's rendered on a GET request -->
+                <div class="card" style="width: 40rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">Check Email</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Check if email password has been leaked publicly</h6>
+                    <p class="card-text">
+                        This check will find out if the email address and its associated password
+                        has appeared in previous security breaches (hacks).
+                        A finding does NOT necessarily mean that the email password is exposed.
+                        It could mean that a password associated with the email has been exposed.
+                        For example, when the email is used as the "user name" to access some Web App.
+                        This example is precisely why password reuse is a bad idea.
+                    </p>
+                  </div>
+                </div>
+                <p> </p>
                 <form method="post">
                     {% csrf_token %}
                     {{ form }}
-                     <input type="submit" value="Check Email">
+                    <button type="submit" class="btn btn-primary">Check Email</button>
                 </form>
             {% endif %}
         </div>
