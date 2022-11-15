@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="card-body">
+            A "data class" is an attribute of a record compromised in a breach. For example, many breaches
+            expose data classes such as "Email addresses" and "Passwords". The values returned by this
+            service will expand over time as new breaches expose previously unseen classes of data.
+        </div>
+        <div class="col-md-8 mt-3 left">
+            <ul>
+                {% for item in data_classes_list %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+    </div>
+</div>
+
+{%endblock%}

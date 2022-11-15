@@ -8,7 +8,6 @@ FHSU - Fall 2022
 """
 
 import requests
-import datetime
 import Config
 
 
@@ -31,27 +30,16 @@ def check_email_function(email):
         'User-Agent': 'Lets Make Strong Passwords',
         'hibp-api-key': Config.api_key
     }
-
     response = requests.get(base_url + api_call + email, headers=headers)
-    # print(response.status_code)
     return response.json()
 
 
-"""
-email = 'samb@townsware.com'
-email = 'testn.com'
-data1 = check_email_function(email)
-if type(data1) == list:
-    for result in data1:
-        print()
-        print('Email'.ljust(12), email)
-        for key in result.keys():
-            # Convert Date fields from UTC to current time zone
-            try:
-                print(str(key).ljust(12), datetime.datetime.strptime(str(result[key]), '%Y-%m-%dT%H:%M:%SZ'))
-            except:
-                print(str(key).ljust(12), result[key])
-else:
-    print(data1)
-"""
-
+def get_hibp_dataclasses_function():
+    base_url = 'https://haveibeenpwned.com/api/v3/'
+    api_call = 'dataclasses'
+    headers = {
+        'User-Agent': 'Lets Make Strong Passwords',
+        'hibp-api-key': Config.api_key
+    }
+    response = requests.get(base_url + api_call, headers=headers)
+    return response.json()

@@ -38,6 +38,14 @@ def contact(request):
     return render(request, 'contact.html', {'site_name': Config.site_name})
 
 
+def data_classes(request):
+    context = {
+        'data_classes_list': get_hibp_dataclasses_function(),
+        'site_name': Config.site_name,
+    }
+    return render(request, 'dataclasses.html', context)
+
+
 def check_email(request):
     # if this is a POST request process the form data
     if request.method == 'POST':
