@@ -28,7 +28,7 @@ def check_email_function(email):
     api_call = 'pasteaccount/'
     headers = {
         'User-Agent': Config.user_agent,
-        'hibp-api-key': Config.api_key
+        'hibp-api-key': Config.api_key,
     }
     response = requests.get(base_url + api_call + email, headers=headers)
     if response.status_code == 200:
@@ -51,7 +51,7 @@ def get_hibp_dataclasses_function():
     api_call = 'dataclasses'
     headers = {
         'User-Agent': Config.user_agent,
-        'hibp-api-key': Config.api_key
+        'hibp-api-key': Config.api_key,
     }
     response = requests.get(base_url + api_call, headers=headers)
     try:
