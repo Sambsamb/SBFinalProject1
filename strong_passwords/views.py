@@ -43,6 +43,14 @@ def data_classes(request):
     return render(request, 'dataclasses.html', context)
 
 
+def page_not_found_view(request, exception):
+    return render(request, '404.html', status=404)
+
+
+def server_error_view(request):
+    return render(request, '500.html')
+
+
 def check_email(request):
     # if this is a POST request process the form data
     if request.method == 'POST':
@@ -98,10 +106,6 @@ def check_email(request):
             'site_name': Config.site_name,
         }
         return render(request, 'check_email.html', context)
-
-
-def page_not_found_view(request, exception):
-    return render(request, '404.html', status=404)
 
 
 def check_pass(request):
