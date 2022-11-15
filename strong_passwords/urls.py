@@ -22,10 +22,6 @@ urlpatterns = [
     path('dataclasses/', views.data_classes, name='data_classes'),
 ]
 
-
-if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = "strong_passwords.views.page_not_found_view"
