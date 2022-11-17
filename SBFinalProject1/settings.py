@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = os.environ['DEBUG']
-ALLOWED_HOSTS = ['.azurewebsites.net']  # ['127.0.0.1']  # ['*']  # ['.azurewebsites.net']
+ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS']  # ['127.0.0.1']  # ['*']  # ['.azurewebsites.net']
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 ROOT_URLCONF = 'SBFinalProject1.urls'
 WSGI_APPLICATION = 'SBFinalProject1.wsgi.application'
