@@ -12,6 +12,7 @@ from .functions import *
 import Config
 from django.shortcuts import render
 from django.template.defaulttags import register
+from django.template import RequestContext
 
 
 @register.filter
@@ -97,7 +98,8 @@ def check_email(request):
                 'alert': alert,
                 'site_name': Config.site_name,
             }
-        return render(request, 'check_email.html', context)
+        return render(request, 'check_email.html', RequestContext(request))
+
     # if a GET (or any other method) we'll create a blank form
     else:
         form = CheckEmail()
