@@ -98,7 +98,7 @@ def check_email(request):
                 'alert': alert,
                 'site_name': Config.site_name,
             }
-        return render(request, 'check_email.html', RequestContext(request))
+        return render(request, 'check_email.html', request)
 
     # if a GET (or any other method) we'll create a blank form
     else:
