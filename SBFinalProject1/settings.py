@@ -18,9 +18,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = os.environ['DEBUG']
 # https://docs.djangoproject.com/en/4.1/ref/settings/#csrf-trusted-origins
-CSRF_TRUSTED_ORIGINS = list(os.environ['CSRF_TRUSTED_ORIGINS'])
-# ALLOWED_HOSTS = list(os.environ['ALLOWED_HOSTS'])
+CSRF_TRUSTED_ORIGINS = ['https://pass601a.azurewebsites.net']
 ALLOWED_HOSTS = ['pass601a.azurewebsites.net']
+# CSRF_TRUSTED_ORIGINS = list(os.environ['CSRF_TRUSTED_ORIGINS'])
+# ALLOWED_HOSTS = list(os.environ['ALLOWED_HOSTS'])
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 ROOT_URLCONF = 'SBFinalProject1.urls'
