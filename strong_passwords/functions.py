@@ -90,3 +90,51 @@ def check_pass_function(mypass):
             'json': json,
         }
     return data
+
+
+def breaches_function():
+    base_url = 'https://haveibeenpwned.com/api/v3/'
+    api_call = 'breaches'
+    headers = {
+        'User-Agent': Config.user_agent,
+        'hibp-api-key': Config.api_key,
+    }
+    response = requests.get(base_url + api_call, headers=headers)
+    try:
+        data = response.json()
+        # keys: {'Title', 'ModifiedDate', 'Description', 'Domain', 'DataClasses',
+        # 'Name', 'AddedDate', 'LogoPath', 'PwnCount', 'BreachDate',
+        # 'IsFabricated', 'IsMalware', 'IsRetired', 'IsSensitive', 'IsSpamList', 'IsVerified'}
+
+        # Comma format the numbers, count the totals:
+        IsFabricatedCount = IsMalwareCount = IsRetiredCount = 0
+        All = IsSensitiveCount = IsSpamListCount = IsVerifiedCount = 0
+        for dic in data:
+            dic.update({'PwnCount': '{:,}'.format(dic['PwnCount'])})
+            All += 1
+            if dic['IsFabricated'] == True:
+                IsFabricatedCount += 1
+            if dic['IsMalware'] == True:
+                IsMalwareCount += 1
+            if dic['IsRetired'] == True:
+                IsRetiredCount += 1
+            if dic['IsSensitive'] == True:
+                IsSensitiveCount += 1
+            if dic['IsSpamList'] == True:
+                IsSpamListCount += 1
+            if dic['IsVerified'] == True:
+                IsVerifiedCount += 1
+
+        # Add summaries at the end:
+        data.append({
+            'IsFabricatedCount': '{:,}'.format(IsFabricatedCount),
+            'IsMalwareCount': '{:,}'.format(IsMalwareCount),
+            'IsRetiredCount': '{:,}'.format(IsRetiredCount),
+            'IsSensitiveCount': '{:,}'.format(IsSensitiveCount),
+            'IsSpamListCount': '{:,}'.format(IsSpamListCount),
+            'IsVerifiedCount': '{:,}'.format(IsVerifiedCount),
+            'All': '{:,}'.format(All),
+        })
+    except:
+        data = response.text
+    return data

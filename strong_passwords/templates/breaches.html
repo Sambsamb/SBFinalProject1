@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="card-body">
+            A total of <b>{{ All }}</b> breaches are presented by HIBP, including:
+            <b>{{ IsFabricatedCount }} </b>Fabricated,
+            <b>{{ IsMalwareCount }} </b>Malware,
+            <b>{{ IsRetiredCount }} </b>Retired,
+            <b>{{ IsSensitiveCount }} </b>Sensitive,
+            <b>{{ IsSpamListCount }} </b>Spam, &
+            <b>{{ IsVerifiedCount }} </b>Verified.
+        </div>
+            <table id="dtBasicExample" class="table table-hover table-striped table-bordered" >
+                <thead>
+                    <tr>
+                        <th>Breach</th>
+                        <th>Breach_Date</th>
+                        <th>Domain</th>
+                        <th>Pwn Count</th>
+                        <th>Description</th>
+                        <!--
+                        <th>IsFabricated</th>
+                        <th>IsMalware</th>
+                        <th>IsSpamList</th>
+                        <th>IsVerified</th>
+                        -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in breach_list %}
+                    <tr>
+                        <td><img src="{{ item | get_item:'LogoPath'}}" width="100"></td>
+                        <td>{{ item | get_item:'BreachDate' }}</td>
+                        <td>{{ item | get_item:'Domain' }}</td>
+                        <td>{{ item | get_item:'PwnCount' }}</td>
+                        <td>{{ item | get_item:'Description' | safe }}</td>
+                        <!--
+                        <td>{{ item | get_item:'IsFabricated' }}</td>
+                        <td>{{ item | get_item:'IsMalware' }}</td>
+                        <td>{{ item | get_item:'IsSpamList' }}</td>
+                        <td>{{ item | get_item:'IsVerified' }}</td>
+                        -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                    </table>
+        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+    </div>
+</div>
+
+{%endblock%}

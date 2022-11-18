@@ -21,6 +21,7 @@ urlpatterns = [
     path('policy/', views.policy, name='policy'),
     path('contact/', views.contact, name='contact'),
     path('dataclasses/', views.data_classes, name='data_classes'),
+    path('breaches/', views.breaches_view, name='breaches'),
 ]
 
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

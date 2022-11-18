@@ -136,3 +136,30 @@ def check_pass(request):
             'site_name': Config.site_name,
         }
         return render(request, 'check_pass.html', context)
+
+
+def breaches_view(request):
+    breach_list = breaches_function()
+    key_order = [
+        'BreachDate',
+        'Domain',
+        'PwnCount',
+        'IsFabricated',
+        'IsMalWare',
+        'IsSpamList',
+        'IsVerified',
+        'Description',
+    ]
+    context = {
+        'breach_list': breach_list[:-1],  # All the list elements except the last one (summaries)
+        'All': breach_list[-1]['All'],
+        'IsFabricatedCount': breach_list[-1]['IsFabricatedCount'],
+        'IsMalwareCount': breach_list[-1]['IsMalwareCount'],
+        'IsRetiredCount': breach_list[-1]['IsRetiredCount'],
+        'IsSensitiveCount': breach_list[-1]['IsSensitiveCount'],
+        'IsSpamListCount': breach_list[-1]['IsSpamListCount'],
+        'IsVerifiedCount': breach_list[-1]['IsVerifiedCount'],
+        'key_order': key_order,
+        'site_name': Config.site_name,
+    }
+    return render(request, 'breaches.html', context)
