@@ -138,3 +138,44 @@ def breaches_function():
     except:
         data = response.text
     return data
+
+
+def breachedaccount_function(account):
+    base_url = 'https://haveibeenpwned.com/api/v3/'
+    api_call = 'breachedaccount/'
+    headers = {
+        'User-Agent': Config.user_agent,
+        'hibp-api-key': Config.api_key,
+    }
+    parameters = '?truncateResponse=false'
+    response = requests.get(base_url + api_call + account + parameters, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        # Add summary column
+        for dic in data:
+            dic.update({'PwnCount': '{:,}'.format(dic['PwnCount'])})
+            summary = []
+            if dic['IsVerified']:
+                summary.append('Verified')
+            if dic['IsFabricated']:
+                summary.append('Fabricated')
+            if dic['IsSensitive']:
+                summary.append('Sensitive')
+            if dic['IsRetired']:
+                summary.append('Retired')
+            if dic['IsSpamList']:
+                summary.append('SpamList')
+            if dic['IsMalware']:
+                summary.append('Malware')
+            dic['summary'] = ', '.join(summary)
+    else:
+        try:
+            json = response.json()
+        except:
+            json = None
+        data = {
+            'code': response.status_code,
+            'text': response.text,
+            'json': json,
+        }
+    return data

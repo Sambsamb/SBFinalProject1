@@ -12,6 +12,7 @@ from .functions import *
 import Config
 from django.shortcuts import render
 from django.template.defaulttags import register
+import time
 
 
 @register.filter
@@ -63,39 +64,84 @@ def check_email(request):
             for item in check_result:
                 keys.update(set(item))
             key_order = sorted(keys)
-            code = text = detail = None
-            alert = 'danger'
+            code1 = text1 = detail1 = None
+            alert1 = 'danger'
             if type(check_result) == dict:
                 key_order = None
-                code = check_result['code']
-                text = check_result['text']
+                code1 = check_result['code']
+                text1 = check_result['text']
                 if check_result['code'] == 400:
-                    detail = 'Bad request: The email provided does not comply with acceptable format.'
-                    alert = 'warning'
+                    detail1 = 'Bad request: The email provided does not comply with acceptable format.'
+                    alert1 = 'warning'
                 elif check_result['code'] == 401:
-                    detail = 'Unauthorized — the API key provided was not valid.'
-                    alert = 'warning'
+                    detail1 = 'Unauthorized — the API key provided was not valid.'
+                    alert1 = 'warning'
                 elif check_result['code'] == 403:
-                    detail = 'Forbidden: No user agent has been specified in the request.'
-                    alert = 'danger'
+                    detail1 = 'Forbidden: No user agent has been specified in the request.'
+                    alert1 = 'danger'
                 elif check_result['code'] == 404:
-                    detail = 'Not found in breach data.'
-                    alert = 'success'
+                    detail1 = 'Not found in breach data.'
+                    alert1 = 'success'
                 elif check_result['code'] == 429:  # Rate limit exceeded
-                    detail = check_result['json']['message']
-                    alert = 'info'
+                    detail1 = check_result['json']['message']
+                    alert1 = 'info'
                 else:
-                    detail = 'Unexpected status code.'
-                    alert = 'warning'
+                    detail1 = 'Unexpected status code.'
+                    alert1 = 'warning'
+
+            time.sleep(10)  # Need to wait 10 sec otherwise I get 429
+            check_breaches = breachedaccount_function(form.cleaned_data['check_email'])
+            code2 = text2 = detail2 = None
+            alert2 = 'danger'
+            breach_keys = [
+                'Title',
+                'Domain',
+                'BreachDate',
+                'PwnCount',
+                'Description',
+            ]
+            if type(check_breaches) == dict:
+                breach_keys = None
+                code2 = check_breaches['code']
+                text2 = check_breaches['text']
+                if check_breaches['code'] == 400:
+                    detail2 = 'Bad request: The email provided does not comply with acceptable format.'
+                    alert2 = 'warning'
+                elif check_breaches['code'] == 401:
+                    detail2 = 'Unauthorized — the API key provided was not valid.'
+                    alert2 = 'warning'
+                elif check_breaches['code'] == 403:
+                    detail2 = 'Forbidden: No user agent has been specified in the request.'
+                    alert2 = 'danger'
+                elif check_breaches['code'] == 404:
+                    detail2 = 'Not found in breach data.'
+                    alert2 = 'success'
+                elif check_breaches['code'] == 429:  # Rate limit exceeded
+                    detail2 = check_result['json']['message']
+                    alert2 = 'info'
+                else:
+                    detail2 = 'Unexpected status code.'
+                    alert2 = 'warning'
+
+
             context = {
                 'email': form.cleaned_data['check_email'],
-                'check_result': check_result,
-                'key_order': key_order,
-                'code': code,
-                'text': text,
-                'detail': detail,
-                'alert': alert,
                 'site_name': Config.site_name,
+
+                'key_order': key_order,
+                'check_result': check_result,
+                'code1': code1,
+                'text1': text1,
+                'detail1': detail1,
+                'alert1': alert1,
+
+                'breach_keys': breach_keys,
+                'check_breaches': check_breaches,
+                'breach_count': len(check_breaches),
+                'code2': code2,
+                'text2': text2,
+                'detail2': detail2,
+                'alert2': alert2,
             }
         return render(request, 'check_email.html', context)
 

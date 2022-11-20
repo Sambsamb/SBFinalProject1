@@ -8,7 +8,7 @@
             <!-- This is what's rendered on a POST request -->
             {% if check_result %}
                 {% if key_order %}
-                    <div class="alert alert-{{ alert }}" role="alert">
+                    <div class="alert alert-{{ alert1 }}" role="alert">
                         A password associated with the email <b>{{ email }}</b> has been leaked/publicly exposed
                         in the following reported breach(es):
                     </div>
@@ -31,10 +31,50 @@
                         </tbody>
                     </table>
                 {% else %}
-                    <div class="alert alert-{{ alert }}" role="alert">
+                    <div class="alert alert-{{ alert1 }}" role="alert">
                         Your email <b>{{ email }}</b> <br>
-                        {{ detail }}<br>
-                        Details: ({{ code }}) {{ text }}
+                        {{ detail1 }}<br>
+                        Details: ({{ code1 }}) {{ text1 }}
+                    </div>
+                {% endif %}
+
+                {% if breach_keys %}
+                    <div class="alert alert-{{ alert2 }}" role="alert">
+                        The email <b>{{ email }}</b> has been observed in the following
+                        <b>{{ breach_count }}</b> breach(es):
+                    </div>
+                    <table id="dtBasicExample" class="table table-hover table-striped table-bordered" >
+                        <thead>
+                            <tr>
+                                <th>Breach</th>
+                                <th>Title</th>
+                                <th>Breach_Date</th>
+                                <th>Domain</th>
+                                <th>Pwn Count</th>
+                                <th>Flags</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in check_breaches %}
+                            <tr>
+                                <td><img src="{{ item | get_item:'LogoPath'}}" width="100"></td>
+                                <td>{{ item | get_item:'Title' }}</td>
+                                <td>{{ item | get_item:'BreachDate' }}</td>
+                                <td>{{ item | get_item:'Domain' }}</td>
+                                <td>{{ item | get_item:'PwnCount' }}</td>
+                                <td>{{ item | get_item:'summary' }}</td>
+                            <tr>
+                            </tr>
+                                <td colspan="6">{{ item | get_item:'Description' | safe }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="alert alert-{{ alert2 }}" role="alert">
+                        Your email <b>{{ email }}</b> <br>
+                        {{ detail2 }}<br>
+                        Extended details: ({{ code2 }}) {{ text2 }}
                     </div>
                 {% endif %}
             {% else %}
