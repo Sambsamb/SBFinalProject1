@@ -16,7 +16,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ['SECRET_KEY']
-DEBUG = os.environ['DEBUG']
+DEBUG = False  # os.environ['DEBUG']
 ALLOWED_HOSTS = ['pass601a.azurewebsites.net']  # list(os.environ['ALLOWED_HOSTS'])
 CSRF_TRUSTED_ORIGINS = ['https://pass601a.azurewebsites.net']  # list(os.environ['CSRF_TRUSTED_ORIGINS'])
 

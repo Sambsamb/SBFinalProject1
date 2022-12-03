@@ -89,7 +89,7 @@ def check_email(request):
                     detail1 = 'Unexpected status code.'
                     alert1 = 'warning'
 
-            time.sleep(10)  # Need to wait 10 sec otherwise I get 429
+            time.sleep(6)  # Need to wait 6 sec otherwise I get 429 (lowest API subscription)
             check_breaches = breachedaccount_function(form.cleaned_data['check_email'])
             code2 = text2 = detail2 = None
             alert2 = 'danger'
