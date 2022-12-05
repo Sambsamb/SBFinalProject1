@@ -17,11 +17,10 @@ To change the port:
 ```python 
 python manage.py runserver 8080
 ```
-To setup the DB:
-```python
-python manage.py makemigrations
-python manage.py migrate
-```
+To deploy this Web App in Azure follow the [steps in this blog post](https://superwidgets.wordpress.com/2022/12/04/deploy-django-web-app-that-uses-sqlite-to-azure/) (skip the last steps to setup and configure the database).
+
+
+
 
 
 
