@@ -9,6 +9,10 @@
 >
 >12/4/2022
 >
+To install these packages use:
+```python
+pip install -r requirements.txt
+```
 To start the development server:
 ```python
 python manage.py runserver
