@@ -9,7 +9,7 @@
 >
 >12/4/2022
 >
-To install these packages use:
+To install the needed packages use:
 ```python
 pip install -r requirements.txt
 ```
